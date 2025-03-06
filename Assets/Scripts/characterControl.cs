@@ -27,15 +27,40 @@ public class characterControl : MonoBehaviour
     [SerializeField] AnimationClip doubleJumpAnim;
     public int dir;
     public bool lookingUp;
+    [SerializeField] AudioClip slowHeart;
+    [SerializeField] AudioClip mediumHeart;
+    [SerializeField] AudioClip fastHeart;
+    [SerializeField] AudioSource AudioSource;
     void Start()
     {
+        AudioSource = GetComponent<AudioSource>();
+        DontDestroyOnLoad(gameObject);
         curCollider = standingCollider;
         rb = GetComponent<Rigidbody2D>();
+        AudioSource.loop = true;
         dir = -1;
     }
 
     void Update()
     {
+        AudioClip newClip;
+        if (GetComponent<health>().Health / GetComponent<health>().startHealth >= 0.66f)
+        {
+            newClip = slowHeart;
+        }
+        else if (GetComponent<health>().Health / GetComponent<health>().startHealth >= 0.33f)
+        {
+            newClip = mediumHeart;
+        }
+        else
+        {
+            newClip = fastHeart;
+        }
+        if (AudioSource.clip != newClip)
+        {
+            AudioSource.clip = newClip;
+            AudioSource.Play();
+        }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) && rb.velocity.y == 0) { crouch(); }
         if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow) && crouching) {unCrouch(); }
         if (Input.GetButtonDown("Jump") && rb.velocity.y == 0) { Jump(); }
@@ -67,7 +92,7 @@ public class characterControl : MonoBehaviour
         if (rb.velocity.x != 0) { srBottom.GetComponent<Animator>().SetBool("running", true); } else { srBottom.GetComponent<Animator>().SetBool("running", false); }
         if (Input.GetAxisRaw("Vertical") > 0) { lookingUp = true; } else { lookingUp = false; }
         if (crouching) { srBottom.sprite = crouchingSprite; srTop.enabled = false; standingCollider.enabled = false; crouchingCollider.enabled = true; curCollider = crouchingCollider; } else { srBottom.sprite = standingSpriteBottom; standingCollider.enabled = true; crouchingCollider.enabled = false; curCollider = standingCollider; srTop.enabled = true; }
-        if (dashTime > 0) { srTop.enabled = false; Debug.Log("fiji"); } else { srTop.enabled = true; }
+        if (dashTime > 0) { srTop.enabled = false; } else { srTop.enabled = true; }
     }
     public void crouch()
     {

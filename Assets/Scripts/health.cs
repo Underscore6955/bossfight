@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class health : MonoBehaviour
 {
-    [SerializeField] float Health;
+    public float startHealth;
+    public float Health;
     void Start()
     {
-        
+        Health = startHealth;
     }
 
     void Update()
@@ -17,6 +18,7 @@ public class health : MonoBehaviour
     public void Damage(float damage)
     {
         Health -= damage;
+        if (gameObject.name == "boss" && GetComponent<health>().Health < GetComponent<fightManager>().phase * 1 / 3 * GetComponent<health>().startHealth) { GetComponent<fightManager>().nextPhase(); }
     }
     void Death()
     {

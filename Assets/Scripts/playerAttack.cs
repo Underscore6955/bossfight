@@ -23,11 +23,9 @@ public class playerAttack : MonoBehaviour
     Vector2 startPos;
     float attackTime;
     [SerializeField] AnimationClip startAimVer;
-    [SerializeField] AnimationClip holdAimVer;
     [SerializeField] AnimationClip startAimDia;
-    [SerializeField] AnimationClip holdAimDia;
     [SerializeField] AnimationClip startAimUp;
-    [SerializeField] AnimationClip holdAimUp;
+    [SerializeField] AnimationClip swordAttack;
     bool aiming;
     int activeWeapon = 0;
     void Start()
@@ -37,25 +35,30 @@ public class playerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { activeWeapon = 1; }
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { activeWeapon = 2; }
+        if (Input.GetButtonUp("Horizontal") && Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { Debug.Log("Let Go"); }
         if (player.GetComponent<characterControl>().dashTime > 0 ) { return; }
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") <= 0 || activeWeapon != 1 ) { aiming = false; } else if (activeWeapon == 1) { aiming = true; }
         transform.localPosition = new Vector3(0,startPos.y,0);
         if (Input.GetAxisRaw("Horizontal") != 0){ transform.localPosition = new Vector2(Mathf.Abs(startPos.x) * player.GetComponent<characterControl>().dir, startPos.y); }
         if(player.GetComponent<characterControl>().lookingUp) { transform.localPosition += new Vector3(0, 0.5f,0); }
         attackTime -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Z) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching && activeWeapon == 2) { if (player.GetComponent<bloodOrb>().hasOrb) { meleeAttackBlood(); } else meleeAttack(); }
-        if (Input.GetKey(KeyCode.X) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching && activeWeapon == 1) { if (player.GetComponent<bloodOrb>().hasOrb) { gunAttackBlood(); } else gunAttack(); }
+        if (Input.GetKeyDown(KeyCode.Z) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { meleeAttackBlood(); } else meleeAttack(); activeWeapon = 2;}
+        if (Input.GetKey(KeyCode.X) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { gunAttackBlood(); } else gunAttack(); if (activeWeapon != 1) { gunAnimInit(); } activeWeapon = 1;  }
         if (aiming) { player.GetComponent<characterControl>().srTop.GetComponent<Animator>().SetBool("aiming", true); } else { player.GetComponent<characterControl>().srTop.GetComponent<Animator>().SetBool("aiming", false); }
         gunAnim();
     }
     void gunAnim()
     {
         if (activeWeapon != 1) { return; }
-        if (Input.GetButtonDown("Horizontal") && !Input.GetButton("Vertical") || Input.GetButton("Horizontal") && Input.GetButtonUp("Vertical")) { changeAnim(startAimVer, true); }
-        if (Input.GetButton("Horizontal") && Input.GetButtonDown("Vertical") || Input.GetButtonDown("Horizontal") && Input.GetButton("Vertical")) { changeAnim(startAimDia, true); }
-        if (!Input.GetButton("Horizontal") && Input.GetButtonDown("Vertical") || Input.GetButton("Vertical") && Input.GetButtonUp("Horizontal")) { changeAnim(startAimUp, true); }
+        if (Input.GetButtonDown("Horizontal") && !Input.GetButton("Vertical") || Input.GetButton("Horizontal") && Input.GetButtonUp("Vertical")) { changeAnim(startAimVer, true); return; }
+        if (Input.GetButton("Horizontal") && Input.GetButtonDown("Vertical") || Input.GetButtonDown("Horizontal") && Input.GetButton("Vertical") || Input.GetButtonUp("Horizontal") && Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { changeAnim(startAimDia, true); return; }
+        if (!Input.GetButton("Horizontal") && Input.GetButtonDown("Vertical") || Input.GetButton("Vertical") && Input.GetButtonUp("Horizontal")) { changeAnim(startAimUp, true); return; }
+    }
+    void gunAnimInit()
+    {
+        if (Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { changeAnim(startAimDia, true); return; }
+        if (Input.GetButton("Vertical")) { changeAnim(startAimVer, true); return; }
+        changeAnim(startAimVer, true);
     }
     void meleeAttack()
     {
@@ -64,6 +67,7 @@ public class playerAttack : MonoBehaviour
             obj.GetComponent<health>().Damage(swordDmg);
             attackTime = attackCooldownSword;
         }
+        changeAnim(swordAttack, true);
     }
     void meleeAttackBlood()
     {
