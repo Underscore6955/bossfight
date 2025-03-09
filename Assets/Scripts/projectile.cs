@@ -9,7 +9,7 @@ public class projectile : MonoBehaviour
     public float damage;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Attackable") { if (players && collision.name == "Player") { Hit(collision.gameObject); } else if (!players && collision.name != "Player") { Hit(collision.gameObject); } }
+        if (collision.tag == "boss" || collision.tag == "Attackable" || collision.tag == "Player") { if (!players && collision.name == "Player") { Hit(collision.gameObject); } else if (players && collision.name != "Player") { Hit(collision.gameObject); } }
     }
     private void Hit(GameObject hit)
     {

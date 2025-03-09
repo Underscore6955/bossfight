@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -35,7 +34,6 @@ public class playerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonUp("Horizontal") && Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { Debug.Log("Let Go"); }
         if (player.GetComponent<characterControl>().dashTime > 0 ) { return; }
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") <= 0 || activeWeapon != 1 ) { aiming = false; } else if (activeWeapon == 1) { aiming = true; }
         transform.localPosition = new Vector3(0,startPos.y,0);
@@ -43,7 +41,7 @@ public class playerAttack : MonoBehaviour
         if(player.GetComponent<characterControl>().lookingUp) { transform.localPosition += new Vector3(0, 0.5f,0); }
         attackTime -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { meleeAttackBlood(); } else meleeAttack(); activeWeapon = 2;}
-        if (Input.GetKey(KeyCode.X) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { gunAttackBlood(); } else gunAttack(); if (activeWeapon != 1) { gunAnimInit(); } activeWeapon = 1;  }
+        if (Input.GetKey(KeyCode.X) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { gunAttackBlood(); } else gunAttack(); if (activeWeapon != 1 ||!Input.GetButton("Vertical") && !Input.GetButton("Horizontal")) { gunAnimInit(); } activeWeapon = 1;  }
         if (aiming) { player.GetComponent<characterControl>().srTop.GetComponent<Animator>().SetBool("aiming", true); } else { player.GetComponent<characterControl>().srTop.GetComponent<Animator>().SetBool("aiming", false); }
         gunAnim();
     }
@@ -58,6 +56,7 @@ public class playerAttack : MonoBehaviour
     {
         if (Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { changeAnim(startAimDia, true); return; }
         if (Input.GetButton("Vertical")) { changeAnim(startAimVer, true); return; }
+        Debug.Log("blunkus");
         changeAnim(startAimVer, true);
     }
     void meleeAttack()
@@ -105,7 +104,6 @@ public class playerAttack : MonoBehaviour
     }
     public void changeAnim(AnimationClip curAnim, bool top)
     {
-        Debug.Log("changed");
         if (top) { player.GetComponent<characterControl>().animTop.Play(curAnim.name); } else { player.GetComponent<characterControl>().animBottom.Play(curAnim.name); }
     }
 }

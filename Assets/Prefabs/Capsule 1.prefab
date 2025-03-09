@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: af485a1d02718ec438eb5aaeb4b93a79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a77e531b1b75fe4188d47df707dcdc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2886344615943539570}
   - component: {fileID: 8231006465119450715}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Capsule 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,8 +113,8 @@ Transform:
   m_GameObject: {fileID: 4580081437285999259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -4.425, y: -1.8459328, z: 0}
-  m_LocalScale: {x: 0.23986, y: 0.23986, z: 0.23986}
+  m_LocalPosition: {x: -4.425, y: -1.8459, z: 0}
+  m_LocalScale: {x: 0.95704365, y: 0.95704365, z: 0.95704365}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6945782096040874459}
@@ -219,8 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a55e9022ea242ee44b3c119607a271b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: 1
-  damage: 0
+  players: 0
+  damage: 1
 --- !u!50 &8231006465119450715
 Rigidbody2D:
   serializedVersion: 4

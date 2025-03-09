@@ -18,7 +18,7 @@ public class health : MonoBehaviour
     public void Damage(float damage)
     {
         Health -= damage;
-        if (gameObject.name == "boss" && GetComponent<health>().Health < GetComponent<fightManager>().phase * 1 / 3 * GetComponent<health>().startHealth) { GetComponent<fightManager>().nextPhase(); }
+        if (gameObject.name == "boss" && GetComponent<health>().Health < (float)(3-GetComponent<fightManager>().phase) / 3 * GetComponent<health>().startHealth) { GetComponent<fightManager>().nextPhase(); }
     }
     void Death()
     {

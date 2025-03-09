@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Landable
   - Attackable
+  - boss
+  - bossAttack
   layers:
   - Default
   - TransparentFX

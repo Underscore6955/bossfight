@@ -12,10 +12,11 @@ public class fightManager : MonoBehaviour
     [SerializeField] Sprite phase1sprite;
     [SerializeField] Sprite phase2sprite;
     [SerializeField] Sprite phase3sprite;
-    [SerializeField] Transform phase1pos;
-    [SerializeField] Transform phase2pos;
-    [SerializeField] Transform phase3pos;
+    [SerializeField] Vector2 phase1pos;
+    [SerializeField] Vector2 phase2pos;
+    [SerializeField] Vector2 phase3pos;
     public int phase = 0;
+    bool started;
     public void lose()
     {
 
@@ -24,11 +25,16 @@ public class fightManager : MonoBehaviour
     {
 
     }
-    public void Start()
+    void OnEnable()
     {
         DontDestroyOnLoad(gameObject);
-        nextPhase();
+        if (!started) { startBattle(); }
+    }
+    private void startBattle()
+    {
+        started = true;
         AudioSource = GetComponent<AudioSource>();
+        nextPhase();
     }
     void Update()
     {
@@ -41,11 +47,11 @@ public class fightManager : MonoBehaviour
         if (phase == 2) { changePhase(phase2music, "phase2", phase2pos, phase2sprite); }
         if (phase == 3) { changePhase(phase3music, "phase3", phase3pos, phase3sprite); }
     }
-    void changePhase(AudioClip clip, string sceneName, Transform bossPos, Sprite bossSprite)
+    void changePhase(AudioClip clip, string sceneName, Vector2 bossPos, Sprite bossSprite)
     {
         SceneManager.LoadScene(sceneName);
         AudioSource.clip = clip;
-       transform.position = bossPos.position;
+        transform.position = bossPos;
         GetComponent<SpriteRenderer>().sprite = bossSprite;
     }
 }

@@ -31,7 +31,7 @@ public class characterControl : MonoBehaviour
     [SerializeField] AudioClip mediumHeart;
     [SerializeField] AudioClip fastHeart;
     [SerializeField] AudioSource AudioSource;
-    void Start()
+    private void OnEnable()
     {
         AudioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
