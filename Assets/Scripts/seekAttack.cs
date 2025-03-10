@@ -9,7 +9,8 @@ public class seekAttack : MonoBehaviour
     private void OnEnable()
     {
         mainCamera = Camera.main;
-        Instantiate(seekerObj, mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)),Quaternion.identity);
+        Instantiate(seekerObj, mainCamera.ViewportToWorldPoint(new Vector3(Random.Range(0,2), Random.Range(0, 2), 0)),Quaternion.identity);
+        Instantiate(seekerObj, mainCamera.ViewportToWorldPoint(new Vector3(Random.Range(0, 2), Random.Range(0, 2), 0)), Quaternion.identity);
         GetComponent<MonoBehaviour>().enabled = false;
     }
 }
