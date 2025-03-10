@@ -15,30 +15,53 @@ public class fightManager : MonoBehaviour
     [SerializeField] Vector2 phase1pos;
     [SerializeField] Vector2 phase2pos;
     [SerializeField] Vector2 phase3pos;
+    [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject lossMenu;
     public int phase = 0;
     bool started;
+    public GameObject healthUI;
+    bool finished;
     public void lose()
     {
-
+        if (finished) return;
+        finished = true;
+        gameObject.GetComponent<bossAttacks>().enabled = false;
+        GameObject.Find("Player").GetComponent<characterControl>().enabled = false;
+        GameObject.Find("attackBox").GetComponent<playerAttack>().enabled = false;
+        phase = 0;
+        Instantiate(lossMenu, Vector2.zero, Quaternion.identity);
     }
     public void win()
     {
-
+        if (finished) return;
+        finished = true;
+        gameObject.GetComponent<bossAttacks>().enabled = false;
+        GameObject.Find("Player").GetComponent<characterControl>().enabled = false;
+        GameObject.Find("attackBox").GetComponent<playerAttack>().enabled = false;
+        phase = 0;
+        Instantiate(winMenu, Vector2.zero, Quaternion.identity) ;
     }
     void OnEnable()
     {
         DontDestroyOnLoad(gameObject);
         if (!started) { startBattle(); }
     }
-    private void startBattle()
+    public void startBattle()
     {
+        finished = false;
+        gameObject.GetComponent<bossAttacks>().enabled = true;
+        GameObject.Find("Player").GetComponent<characterControl>().enabled = true;
+        GameObject.Find("attackBox").GetComponent<playerAttack>().enabled = true;
+        gameObject.GetComponent<health>().Health = gameObject.GetComponent<health>().startHealth;
+        GameObject.Find("Player").GetComponent<health>().Health = GameObject.Find("Player").GetComponent<health>().startHealth;
         started = true;
         AudioSource = GetComponent<AudioSource>();
         nextPhase();
     }
     void Update()
     {
-        
+        healthUI = GameObject.Find("healthUI");
+        healthUI.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.6f - GameObject.Find("Player").GetComponent<health>().Health / GameObject.Find("Player").GetComponent<health>().startHealth * 0.6f);
     }
     public void nextPhase()
     {
@@ -51,6 +74,7 @@ public class fightManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
         AudioSource.clip = clip;
+        AudioSource.Play();
         transform.position = bossPos;
         GetComponent<SpriteRenderer>().sprite = bossSprite;
     }

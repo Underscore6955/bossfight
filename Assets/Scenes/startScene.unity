@@ -149,8 +149,8 @@ Transform:
   m_GameObject: {fileID: 46285792}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.379, y: 0, z: 0}
-  m_LocalScale: {x: 0.4523045, y: 0.4523045, z: 0.4523045}
+  m_LocalPosition: {x: -0.406, y: -0.029, z: 0}
+  m_LocalScale: {x: 0.7124, y: 0.67470264, z: 0.4523045}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 71638417}
@@ -191,10 +191,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -215,7 +215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1558012940}
   gunSpawn: {fileID: 71638416}
-  attackCooldownSword: 2
+  swordList: []
+  attackCooldownSword: 1.2
   attackCooldownGun: 0.6
   swordDmg: 100
   gunDmg: 30
@@ -252,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 71638416}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.23435546, z: 0.077006176}
+  m_LocalPosition: {x: 0, y: 0.474, z: 0.077006176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -361,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 1000
   Health: 0
+  renderers: []
 --- !u!61 &94826272
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -393,7 +395,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.018887646, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -404,7 +406,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.482769, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &94826273
 MonoBehaviour:
@@ -427,7 +429,10 @@ MonoBehaviour:
   phase1pos: {x: 0, y: 1.35}
   phase2pos: {x: -6, y: 0.8}
   phase3pos: {x: 6, y: 1.1}
+  winMenu: {fileID: 0}
+  lossMenu: {fileID: 115653250186965799, guid: e55f0ceb756b0104c85beaaa21efebfe, type: 3}
   phase: 0
+  healthUI: {fileID: 0}
 --- !u!82 &94826274
 AudioSource:
   m_ObjectHideFlags: 0
@@ -440,9 +445,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.311
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1331,6 +1336,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 100
   Health: 0
+  renderers:
+  - {fileID: 1032694448}
+  - {fileID: 1188961530}
 --- !u!82 &1558012949
 AudioSource:
   m_ObjectHideFlags: 0

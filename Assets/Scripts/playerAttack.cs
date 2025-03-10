@@ -10,7 +10,7 @@ public class playerAttack : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] GameObject gunSpawn;
-    List<GameObject> swordList = new List<GameObject>();
+    public List<GameObject> swordList = new List<GameObject>();
     [SerializeField] float attackCooldownSword;
     [SerializeField] float attackCooldownGun;
     [SerializeField] float swordDmg;
@@ -36,9 +36,7 @@ public class playerAttack : MonoBehaviour
     {
         if (player.GetComponent<characterControl>().dashTime > 0 ) { return; }
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") <= 0 || activeWeapon != 1 ) { aiming = false; } else if (activeWeapon == 1) { aiming = true; }
-        transform.localPosition = new Vector3(0,startPos.y,0);
         if (Input.GetAxisRaw("Horizontal") != 0){ transform.localPosition = new Vector2(Mathf.Abs(startPos.x) * player.GetComponent<characterControl>().dir, startPos.y); }
-        if(player.GetComponent<characterControl>().lookingUp) { transform.localPosition += new Vector3(0, 0.5f,0); }
         attackTime -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Z) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { meleeAttackBlood(); } else meleeAttack(); activeWeapon = 2;}
         if (Input.GetKey(KeyCode.X) && attackTime <= 0 && !player.GetComponent<characterControl>().crouching) { if (player.GetComponent<bloodOrb>().hasOrb) { gunAttackBlood(); } else gunAttack(); if (activeWeapon != 1 ||!Input.GetButton("Vertical") && !Input.GetButton("Horizontal")) { gunAnimInit(); } activeWeapon = 1;  }
@@ -55,16 +53,15 @@ public class playerAttack : MonoBehaviour
     void gunAnimInit()
     {
         if (Input.GetButton("Horizontal") && Input.GetButton("Vertical")) { changeAnim(startAimDia, true); return; }
-        if (Input.GetButton("Vertical")) { changeAnim(startAimVer, true); return; }
-        Debug.Log("blunkus");
+        if (Input.GetButton("Vertical")) { changeAnim(startAimUp, true); return; }
         changeAnim(startAimVer, true);
     }
     void meleeAttack()
     {
+        attackTime = attackCooldownSword;
         foreach (GameObject obj in swordList)
         {
             obj.GetComponent<health>().Damage(swordDmg);
-            attackTime = attackCooldownSword;
         }
         changeAnim(swordAttack, true);
     }
@@ -90,14 +87,14 @@ public class playerAttack : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject != gameObject && collision.tag == "Attackable")
+        if (collision.gameObject.tag == "Attackable" || collision.gameObject.tag == "boss")
         {
             swordList.Add(collision.gameObject);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject != gameObject && collision.tag == "Attackable")
+        if (collision.gameObject.tag == "Attackable" || collision.gameObject.tag == "boss")
         {
             swordList.Remove(collision.gameObject);
         }

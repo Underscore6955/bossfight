@@ -7,6 +7,10 @@ public class bossAttacks : MonoBehaviour
     List<GameObject> attacks = new List<GameObject>();
     float curCooldown;
     [SerializeField] int cooldown;
+    private void Start()
+    {
+        curCooldown = cooldown;
+    }
     public void updateAttacks()
     {
         attacks.Clear();

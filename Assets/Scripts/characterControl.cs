@@ -43,6 +43,7 @@ public class characterControl : MonoBehaviour
 
     void Update()
     {
+
         AudioClip newClip;
         if (GetComponent<health>().Health / GetComponent<health>().startHealth >= 0.66f)
         {

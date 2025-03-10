@@ -54,7 +54,6 @@ public class sideFire : MonoBehaviour
             Vector3 spawnPosition = new Vector3(x, y, z);
             GameObject curBullet = Instantiate(bullet, spawnPosition, rotation);
             curBullet.GetComponent<Rigidbody2D>().velocity = velocity;
-            Debug.Log(curBullet.transform.position);
         }
         GetComponent<MonoBehaviour>().enabled = false;
     }
