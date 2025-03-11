@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: 0
-  damage: 1
+  damage: 20
 --- !u!114 &6434927972582890662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef6e136df430a5479cc5733b0554ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.5
 --- !u!114 &-2428566935067111484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startHealth: 1
   Health: 0
+  renderers: []
 --- !u!50 &467787979085410592
 Rigidbody2D:
   serializedVersion: 4

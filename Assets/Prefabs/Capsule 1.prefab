@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: 0
-  damage: 1
+  damage: 6
 --- !u!50 &8231006465119450715
 Rigidbody2D:
   serializedVersion: 4

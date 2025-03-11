@@ -6,7 +6,7 @@ public class quitButton : MonoBehaviour
 {
     private void Update()
     {
-        if (!Input.GetMouseButtonDown(0) || !Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)) == gameObject) return;
+        if (!Input.GetMouseButtonDown(0) || Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)).gameObject != gameObject) return;
         Application.Quit();
     }
 }

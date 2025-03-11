@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: 0
-  damage: 1
+  damage: 15
 --- !u!70 &3887622996901217513
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

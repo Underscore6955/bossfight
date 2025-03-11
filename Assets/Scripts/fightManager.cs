@@ -57,6 +57,7 @@ public class fightManager : MonoBehaviour
         started = true;
         AudioSource = GetComponent<AudioSource>();
         nextPhase();
+        GameObject.Find("Player").transform.position = new Vector2(7.31f, -2f);
     }
     void Update()
     {
@@ -69,6 +70,7 @@ public class fightManager : MonoBehaviour
         if (phase == 1) { changePhase(phase1music, "phase1",phase1pos,phase1sprite); }
         if (phase == 2) { changePhase(phase2music, "phase2", phase2pos, phase2sprite); }
         if (phase == 3) { changePhase(phase3music, "phase3", phase3pos, phase3sprite); }
+        if (phase == 4) { win(); }
     }
     void changePhase(AudioClip clip, string sceneName, Vector2 bossPos, Sprite bossSprite)
     {
